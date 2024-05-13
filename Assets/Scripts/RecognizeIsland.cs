@@ -12,6 +12,7 @@ public class RecognizeIsland : MonoBehaviour
     {
         map = GetComponent<Tilemap>();
         map.CompressBounds();
+        tiles = map.GetTilesBlock(map.cellBounds);
         var cellPosition = map.WorldToCell(transform.position);
 
         for (var x = 0; x < map.cellBounds.size.x; x++)
