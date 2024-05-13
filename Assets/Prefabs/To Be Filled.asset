@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: To Be Filled
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_DefaultGameObject: {fileID: 4716955278302745491, guid: cca5cfa2967bc3e43b0adbf4b1822b72,
+  m_DefaultGameObject: {fileID: 7589691978525982114, guid: 601a9d3a94eb3ea4c80fb11071f12089,
     type: 3}
   m_DefaultColliderType: 2
   m_TilingRules: []
