@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6dc531993d0ebb49b3288867495f023, type: 3}
-  m_Name: 2Land
+  m_Name: 4plants
   m_EditorClassIdentifier: 
-  index: 2
-  prefab: {fileID: 4716955278302745491, guid: 36c875b2dc6e8b545a5147ab737c5f5a, type: 3}
-  acceptedTiles: 02000000010000000300000004000000
+  index: 4
+  prefab: {fileID: 4716955278302745491, guid: 804f697b68977eb4587f3a3e469574b3, type: 3}
+  acceptedTiles: 0200000004000000
