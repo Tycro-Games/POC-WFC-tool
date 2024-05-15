@@ -13,6 +13,7 @@ public class WFCGenerator : MonoBehaviour
 
 
     private List<int> grid;
+    private List<int> initGrid;
     private List<int> indexLandTiles = new();
     private List<Vector3Int> positionsGrid;
     private int height = 0;
@@ -22,11 +23,11 @@ public class WFCGenerator : MonoBehaviour
     [Header("Tiles")] [SerializeField] private Transform tilesParent;
     [SerializeField] private ScriptableTiles[] tiles;
     private Dictionary<int, List<ScriptableTiles>> tilesEntropy;
-    private List<KeyValuePair<int, List<ScriptableTiles>>> sortedTiles;
 
     public void CleanTiles()
     {
         foreach (Transform child in tilesParent) Destroy(child.gameObject);
+        grid = new List<int>(initGrid);
     }
 
 
@@ -54,7 +55,6 @@ public class WFCGenerator : MonoBehaviour
     public void GenerateWFC()
     {
         //all the same chances
-        var tempLandTiles = new List<int>(indexLandTiles);
         tilesEntropy = new Dictionary<int, List<ScriptableTiles>>();
         foreach (var indexLandTile in indexLandTiles)
         {
@@ -67,36 +67,6 @@ public class WFCGenerator : MonoBehaviour
         }
 
         while (tilesEntropy.Count > 0) Iterate();
-
-
-        //update each one with the chances
-
-        //foreach (var indexLandTile in tempLandTiles)
-        //{
-        //    var neightbours = GetNeightbours(positionsGrid[indexLandTile]);
-        //    foreach (var neightbour in neightbours)
-        //        if (grid[neightbour] == 0)
-        //        {
-        //            CreateTile(positionsGrid[indexLandTile], tiles[0].prefab);
-        //            indexLandTiles.Remove(indexLandTile);
-        //            break;
-        //        }
-        //}
-
-        ////use entropy
-        ////spawn the rest with WFC
-        //while (indexLandTiles.Count > 0)
-        //{
-        //    var randomLandTile = indexLandTiles[Random.Range(0, 1)];
-
-        //    var neightbours = GetNeightbours(positionsGrid[randomLandTile]);
-        //    var values = new List<int>();
-        //    foreach (var neightbour in neightbours) values.Add(grid[neightbour]);
-        //    var possibleTiles = tiles.Where(x => values.All(x.acceptedTiles.Contains)).ToList();
-
-        //    CreateTile(positionsGrid[randomLandTile], possibleTiles[Random.Range(0, possibleTiles.Count)].prefab);
-        //    indexLandTiles.Remove(randomLandTile);
-        //}
     }
 
     public void Iterate()
@@ -109,7 +79,7 @@ public class WFCGenerator : MonoBehaviour
     private KeyValuePair<int, List<ScriptableTiles>> CreateSmallestTIle()
     {
         //sort them by entropy
-        sortedTiles = tilesEntropy.OrderBy(x => x.Value.Count).ToList();
+        var sortedTiles = tilesEntropy.OrderBy(x => x.Value.Count).ToList();
 
 
         // Find the smallest count
@@ -227,6 +197,7 @@ public class WFCGenerator : MonoBehaviour
             map.ClearAllTiles();
         }
 
+        initGrid = new List<int>(grid);
 
         for (var x = 0; x < width; x++)
         for (var y = 0; y < height; y++)
@@ -245,9 +216,6 @@ public class WFCGenerator : MonoBehaviour
 
 
                 tileObj.name = ((Vector2Int)tilePos).ToString();
-            }
-            else
-            {
             }
         }
     }
