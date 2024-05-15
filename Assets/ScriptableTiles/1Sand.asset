@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dc531993d0ebb49b3288867495f023, type: 3}
   m_Name: 1Sand
   m_EditorClassIdentifier: 
+  index: 1
   prefab: {fileID: 4716955278302745491, guid: b391caa3bde8e204d8dd90f1620a3655, type: 3}
-  acceptedTiles: 0000000001000000
+  acceptedTiles: 00000000

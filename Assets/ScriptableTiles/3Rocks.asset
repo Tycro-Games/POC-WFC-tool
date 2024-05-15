@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dc531993d0ebb49b3288867495f023, type: 3}
   m_Name: 3Rocks
   m_EditorClassIdentifier: 
+  index: 3
   prefab: {fileID: 4716955278302745491, guid: e016589edc022ee4cb8a073cc0ae891a, type: 3}
   acceptedTiles: 0200000003000000

@@ -21,6 +21,8 @@ public class WFCGenerator : MonoBehaviour
 
     [Header("Tiles")] [SerializeField] private Transform tilesParent;
     [SerializeField] private ScriptableTiles[] tiles;
+    private Dictionary<int, List<ScriptableTiles>> tilesEntropy;
+    private List<KeyValuePair<int, List<ScriptableTiles>>> sortedTiles;
 
     public void CleanTiles()
     {
@@ -53,7 +55,7 @@ public class WFCGenerator : MonoBehaviour
     {
         //all the same chances
         var tempLandTiles = new List<int>(indexLandTiles);
-        var tilesEntropy = new Dictionary<int, List<ScriptableTiles>>();
+        tilesEntropy = new Dictionary<int, List<ScriptableTiles>>();
         foreach (var indexLandTile in indexLandTiles)
         {
             var neightbours = GetNeightbours(positionsGrid[indexLandTile]);
@@ -64,20 +66,8 @@ public class WFCGenerator : MonoBehaviour
             tilesEntropy.Add(indexLandTile, possibleTiles);
         }
 
-        //sort them by entropy
-        var sortedTiles = tilesEntropy.OrderBy(x => x.Value.Count).ToList();
+        while (tilesEntropy.Count > 0) Iterate();
 
-
-        // Find the smallest count
-        var firstElement = RandomSmallestValue(sortedTiles);
-
-        sortedTiles.Remove(firstElement);
-        var randomTileIndex = Random.Range(0, firstElement.Value.Count);
-        CreateTile(positionsGrid[firstElement.Key],
-            firstElement.Value[randomTileIndex].prefab);
-        grid[firstElement.Key] = randomTileIndex + 1;
-        //propagate the changes
-        //PropagateChanges(firstElement.Key);
 
         //update each one with the chances
 
@@ -107,17 +97,75 @@ public class WFCGenerator : MonoBehaviour
         //    CreateTile(positionsGrid[randomLandTile], possibleTiles[Random.Range(0, possibleTiles.Count)].prefab);
         //    indexLandTiles.Remove(randomLandTile);
         //}
+    }
 
-        mainMap.ClearAllTiles();
+    public void Iterate()
+    {
+        var firstElement = CreateSmallestTIle();
+        //propagate the changes
+        PropagateChanges(firstElement.Key);
+    }
+
+    private KeyValuePair<int, List<ScriptableTiles>> CreateSmallestTIle()
+    {
+        //sort them by entropy
+        sortedTiles = tilesEntropy.OrderBy(x => x.Value.Count).ToList();
+
+
+        // Find the smallest count
+        var toDeleteIndex = 0;
+        var firstElement = RandomSmallestValue(sortedTiles, ref toDeleteIndex);
+
+        tilesEntropy.Remove(firstElement.Key);
+        var randomTileIndex = Random.Range(0, firstElement.Value.Count);
+        CreateTile(positionsGrid[firstElement.Key],
+            firstElement.Value[randomTileIndex].prefab);
+        grid[firstElement.Key] = firstElement.Value[randomTileIndex].index;
+        return firstElement;
     }
 
     private void PropagateChanges(int changedTile)
     {
-        throw new System.NotImplementedException();
+        var neigh = GetNeightBoursValues(changedTile, out var values);
+        for (var i = 0; i < values.Count; i++)
+            if (values[i] == -1)
+            {
+                if (!tilesEntropy.ContainsKey(neigh[i]))
+                    continue;
+                Debug.Log(positionsGrid[neigh[i]] + " " + tilesEntropy[neigh[i]].Count);
+                var currentPossibleTiles = tilesEntropy[neigh[i]];
+
+                if (currentPossibleTiles.Count > 1)
+                {
+                    var possibleTiles = currentPossibleTiles
+                        .Where(x => x.acceptedTiles.Contains(grid[changedTile]))
+                        .ToList();
+                    Debug.Log(positionsGrid[neigh[i]] + " " + possibleTiles.Count);
+                    tilesEntropy[neigh[i]] = possibleTiles;
+                }
+                //var neighNeight = GetNeightBoursValues(neigh[i], out var neightValues);
+                //for (var j = 0; j < neightValues.Count; j++)
+                //    if (values[j] == -1)
+                //    {
+                //        var possibleTiles = tiles
+                //            .Where(x => neightValues.All(v => v == -1 || x.acceptedTiles.Contains(v)))
+                //            .ToList();
+                //        Debug.Log(positionsGrid[neigh[i]] + " " + possibleTiles.Count);
+                //    }
+            }
+    }
+
+    private List<int> GetNeightBoursValues(int changedTile, out List<int> values)
+    {
+        var neigh = GetNeightbours(positionsGrid[changedTile]);
+        values = new List<int>();
+        foreach (var neightbour in neigh)
+            values.Add(grid[neightbour]);
+        return neigh;
     }
 
     private static KeyValuePair<int, List<ScriptableTiles>> RandomSmallestValue(
-        List<KeyValuePair<int, List<ScriptableTiles>>> sortedTiles)
+        List<KeyValuePair<int, List<ScriptableTiles>>> sortedTiles, ref int index)
     {
         var smallestCount = sortedTiles.First().Value.Count;
 
@@ -127,9 +175,9 @@ public class WFCGenerator : MonoBehaviour
             .ToList();
 
         // Select one of the smallest elements randomly
-        var randomIndex = Random.Range(0, smallestElements.Count);
+        index = Random.Range(0, smallestElements.Count);
 
-        var firstElement = smallestElements[randomIndex];
+        var firstElement = smallestElements[index];
         return firstElement;
     }
 

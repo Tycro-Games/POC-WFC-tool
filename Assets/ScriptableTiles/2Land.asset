@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dc531993d0ebb49b3288867495f023, type: 3}
   m_Name: 2Land
   m_EditorClassIdentifier: 
+  index: 2
   prefab: {fileID: 4716955278302745491, guid: 36c875b2dc6e8b545a5147ab737c5f5a, type: 3}
   acceptedTiles: 020000000100000003000000
