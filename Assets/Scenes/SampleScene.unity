@@ -9589,6 +9589,8 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: 4b75ab426c1901a47b0ac9e931f2bc97, type: 2}
   - {fileID: 11400000, guid: 8c31c43a83d848143a4330566bbfa8c4, type: 2}
+  - {fileID: 11400000, guid: c0175070374c63c4895e2883d15170a3, type: 2}
+  - {fileID: 11400000, guid: 41b3140bb1d34f84b832ec15b8e29eb5, type: 2}
 --- !u!114 &1261872634
 MonoBehaviour:
   m_ObjectHideFlags: 0
