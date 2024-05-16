@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7533230614886019164}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WaterTile
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
@@ -95,10 +95,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: blockMovingBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb93062fa60cd1e47af8e95be77d4c13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb93062fa60cd1e47af8e95be77d4c13,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1847918541274407576}
   m_SourcePrefab: {fileID: 100100000, guid: fb93062fa60cd1e47af8e95be77d4c13, type: 3}
 --- !u!4 &7240612668992753917 stripped
 Transform:
@@ -106,3 +115,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7201655619806099222}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8011906420124535367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fb93062fa60cd1e47af8e95be77d4c13,
+    type: 3}
+  m_PrefabInstance: {fileID: 7201655619806099222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1847918541274407576
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8011906420124535367}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 0.49999997, z: 0.99999994}
+  m_Center: {x: 0, y: 0.24999999, z: 0}

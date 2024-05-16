@@ -12,7 +12,7 @@ public class WFCGenerator : MonoBehaviour
     [SerializeField] private GameObject water;
 
 
-    private List<int> grid;
+    public List<int> grid;
     private List<int> initGrid;
     private List<int> indexLandTiles = new();
     private List<Vector3Int> positionsGrid;
@@ -23,6 +23,7 @@ public class WFCGenerator : MonoBehaviour
     [Header("Tiles")] [SerializeField] private Transform tilesParent;
     [SerializeField] private ScriptableTiles[] tiles;
     private Dictionary<int, List<ScriptableTiles>> tilesEntropy;
+    [SerializeField] private RoadGrid _roadRoadGrid;
 
     public void CleanTiles()
     {
@@ -39,6 +40,8 @@ public class WFCGenerator : MonoBehaviour
         positionsGrid = new List<Vector3Int>(mainMap.size.x * mainMap.size.y);
         width = mainMap.size.x;
         height = mainMap.size.y;
+        _roadRoadGrid.gridWorldSize.x = width;
+        _roadRoadGrid.gridWorldSize.y = height;
         grid.AddRange(Enumerable.Repeat(0, mainMap.size.x * mainMap.size.y));
         foreach (var island in islands)
         {
@@ -218,6 +221,8 @@ public class WFCGenerator : MonoBehaviour
                 tileObj.name = ((Vector2Int)tilePos).ToString();
             }
         }
+
+        mainMap.ClearAllTiles();
     }
 
     private void CreateTile(Vector3Int tilePos, GameObject toBeLand)
